@@ -9,11 +9,8 @@ using namespace std;
 
 class AppUI;
 
-typedef function<void(AppUI*, Storage&)> appfunc;
 
-void test(AppUI* app, Storage& storage) {
-    cout << "Hello, World" << endl;
-}
+typedef function<void(AppUI*, Storage&)> appfunc;
 
 class AppUI {
     // Консольный интерфейс для создания записей
@@ -44,10 +41,36 @@ class AppUI {
     unordered_map<string, appfunc> functions;
 public:
     AppUI(Storage& storage) : storage(storage) {
-        functions["test"] = test;
-        int a = 42;
-        functions["test2"] = [a](AppUI* app, Storage& storage) {
-            cout << "Test2 " << a << endl;
+        functions["list"] = [](AppUI* app, Storage& storage) {
+            vector<string> names = storage.getEntriesNames();
+            cout << "Сохранённые записи ";
+            cout << names.size() << ":" << endl;
+            for (string name : names) {
+                cout << "  " << name << endl;
+            }
+        };
+        functions["add"] = [this](AppUI* app, Storage& storage) {
+            storage.add(create_entry());
+            storage.save();
+        };
+        functions["show"] = [](AppUI* app, Storage& storage) {
+            string name;
+            cout << "название: ";
+            getline(cin, name);
+            Entry* entry = storage.getEntry(name);
+            if (entry == nullptr) {
+                cout << "запись не найдена" << endl;
+                return;
+            }
+            cout << "Запись '" << name << "':" << endl;
+            cout << entry->getText() << endl;
+            cout << "дата: " << entry->getCreated() << endl;
+        };
+        functions["delete"] = [](AppUI* app, Storage& storage) {
+            string name;
+            cout << "название: ";
+            getline(cin, name);
+
         };
     }
 
