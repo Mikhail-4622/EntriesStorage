@@ -51,4 +51,22 @@ void Storage::save() {
     for (auto pair : entries) {
         output << *pair.second;
     }
+    output.close();
+}
+
+// ѕолучение записи по названию
+Entry* Storage::getEntry(std::string name) const {
+    auto found = entries.find(name);
+    if (found != entries.end()) {
+        return found->second;
+    }
+    return nullptr;
+}
+// ѕолучение списка названий записей в хранилище
+std::vector<std::string> Storage::getEntriesNames() const {
+    std::vector<std::string> names;
+    for (auto pair : entries) {
+        names.push_back(pair.first);
+    }
+    return names;
 }

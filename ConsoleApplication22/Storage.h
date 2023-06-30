@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include <unordered_map>
 
 class Entry;
@@ -18,5 +19,9 @@ public:
     void add(Entry* entry);
     void load();
     void save();
+
+    Entry* getEntry(std::string name) const;
+    std::vector<std::string> getEntriesNames() const;
+
 };
 

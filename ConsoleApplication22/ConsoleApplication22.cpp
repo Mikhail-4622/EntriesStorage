@@ -21,6 +21,8 @@ Entry* create_entry() {
     return new Entry(name, text, created);
 }
 
+
+
 int main() {
     setlocale(LC_ALL, "");
 
