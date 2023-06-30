@@ -5,6 +5,8 @@
 
 using namespace std;
 
+
+
 // Консольный интерфейс для создания записей
 Entry* create_entry() {
     string name;
@@ -22,6 +24,24 @@ Entry* create_entry() {
 }
 
 
+void printGuide() {
+    cout << "Доступные команды:" << endl;
+    cout << "  list   - список сохранённых записей" << endl;
+    cout << "  add    - создать запись" << endl;
+    cout << "  show   - показать запись" << endl;
+    cout << "  delete - удалить запись" << endl;
+    cout << "  exit   - завершить программу" << endl;
+}
+
+void mainloop(Storage& storage) {
+    printGuide();
+    while (true) {
+        string cmd;
+        cout << "> ";
+        getline(cin, cmd);
+    }
+}
+
 
 int main() {
     setlocale(LC_ALL, "");
@@ -31,8 +51,7 @@ int main() {
     Storage storage("database.txt");
     storage.load();
 
-    // Создаём и добавляем запись в хранилище
-    storage.add(create_entry());
+    mainloop(storage);
 
     // Сохраняем записи в файл
     storage.save();
