@@ -75,6 +75,14 @@ public:
             cout << "название: ";
             getline(cin, name);
 
+            bool result = storage.remove(name);
+            if (result) {
+                cout << "запись удалена" << endl;
+                storage.save();
+            }
+            else {
+                cout << "запись не найдена" << endl;
+            }
         };
     }
 
@@ -84,6 +92,9 @@ public:
             string cmd;
             cout << "> ";
             getline(cin, cmd);
+
+            if (cmd == "exit")
+                break;
 
             auto found = functions.find(cmd);
             if (found != functions.end()) {

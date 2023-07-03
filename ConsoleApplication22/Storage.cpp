@@ -23,6 +23,14 @@ void Storage::add(Entry* entry) {
     entries[name] = entry;
 }
 
+// Удаление записи из хранилища
+bool Storage::remove(string name) {
+    auto found = entries.find(name);
+    bool result = found != entries.end();
+    entries.erase(name);
+    return result;
+}
+
 // Чтение записей из файла
 void Storage::load() {
     ifstream input(file);

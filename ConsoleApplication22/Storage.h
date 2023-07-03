@@ -17,6 +17,7 @@ public:
     ~Storage();
 
     void add(Entry* entry);
+    bool remove(std::string name);
     void load();
     void save();
 
