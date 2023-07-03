@@ -35,6 +35,7 @@ class AppUI {
         cout << "  show   - показать запись" << endl;
         cout << "  delete - удалить запись" << endl;
         cout << "  exit   - завершить программу" << endl;
+        cout << "  help   - вывести эту инструкцию" << endl;
     }
 
     Storage& storage;
@@ -74,15 +75,17 @@ public:
             string name;
             cout << "название: ";
             getline(cin, name);
-
             bool result = storage.remove(name);
             if (result) {
                 cout << "запись удалена" << endl;
                 storage.save();
-            }
-            else {
+            } else {
                 cout << "запись не найдена" << endl;
             }
+        };
+
+        functions["help"] = [this](AppUI* app, Storage& storage) {
+            printGuide();
         };
     }
 
@@ -93,8 +96,9 @@ public:
             cout << "> ";
             getline(cin, cmd);
 
-            if (cmd == "exit")
+            if (cmd == "exit") {
                 break;
+            }
 
             auto found = functions.find(cmd);
             if (found != functions.end()) {
@@ -111,18 +115,10 @@ public:
 int main() {
     setlocale(LC_ALL, "");
 
-    // Создание хранилища, загрузка сохранённых
-    // в файл данных
     Storage storage("database.txt");
     storage.load();
 
     AppUI app(storage);
     app.mainloop();
-
-    // Сохраняем записи в файл
-    storage.save();
-
-    // Открываем файл с записями в блокноте
-    system("notepad.exe database.txt");
     return 0;
 }
