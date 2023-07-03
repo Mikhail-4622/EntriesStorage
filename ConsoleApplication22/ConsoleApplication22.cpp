@@ -41,6 +41,7 @@ class AppUI {
     unordered_map<string, appfunc> functions;
 public:
     AppUI(Storage& storage) : storage(storage) {
+
         functions["list"] = [](AppUI* app, Storage& storage) {
             vector<string> names = storage.getEntriesNames();
             cout << "Сохранённые записи ";
@@ -49,10 +50,12 @@ public:
                 cout << "  " << name << endl;
             }
         };
+
         functions["add"] = [this](AppUI* app, Storage& storage) {
             storage.add(create_entry());
             storage.save();
         };
+
         functions["show"] = [](AppUI* app, Storage& storage) {
             string name;
             cout << "название: ";
@@ -66,6 +69,7 @@ public:
             cout << entry->getText() << endl;
             cout << "дата: " << entry->getCreated() << endl;
         };
+
         functions["delete"] = [](AppUI* app, Storage& storage) {
             string name;
             cout << "название: ";
